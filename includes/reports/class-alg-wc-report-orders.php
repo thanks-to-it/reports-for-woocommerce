@@ -58,7 +58,9 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 	function get_data( $name ) {
 		$data = apply_filters(
 			'alg_wc_reports_orders_data',
-			$this->get_data_sales_by_meta( str_replace( array( 'alg_wc_report_sales_by' ), '', $name ) ),
+			$this->get_data_sales_by_meta(
+				str_replace( array( 'alg_wc_report_sales_by' ), '', $name )
+			),
 			$name,
 			$this
 		);
@@ -75,7 +77,7 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 	/**
 	 * get_data_sales_by_meta.
 	 *
-	 * @version 1.7.0
+	 * @version 2.0.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/wiki/wc_get_orders-and-WC_Order_Query
@@ -98,9 +100,21 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 		$detailed_data_keys  = array();
 		$do_skip_zero_orders = ( 'yes' === get_option( 'alg_wc_reports_skip_zero_orders', 'no' ) );
 		$item_data_type      = $this->get_menu()->get_item_data_type();
-		$product_cat         = ( 'single'   === get_option( 'alg_wc_reports_menu_product_cat', 'multiple' ) ? $this->get_menu()->get_product_cat()  : '' );
-		$product_cats        = ( 'multiple' === get_option( 'alg_wc_reports_menu_product_cat', 'multiple' ) ? $this->get_menu()->get_product_cats() : array() );
-		$product_cats        = ( ! empty( $product_cats ) ? $product_cats : ( '' !== $product_cat ? array( $product_cat ) : array() ) );
+		$product_cat         = (
+			'single'   === get_option( 'alg_wc_reports_menu_product_cat', 'multiple' ) ?
+			$this->get_menu()->get_product_cat() :
+			''
+		);
+		$product_cats        = (
+			'multiple' === get_option( 'alg_wc_reports_menu_product_cat', 'multiple' ) ?
+			$this->get_menu()->get_product_cats() :
+			array()
+		);
+		$product_cats        = (
+			! empty( $product_cats ) ?
+			$product_cats :
+			( '' !== $product_cat ? array( $product_cat ) : array() )
+		);
 		$date_range          = get_option( 'alg_wc_reports_orders_date_range', 'date_created' );
 		$orderby             = get_option( 'alg_wc_reports_orders_orderby', 'date' );
 		$orderby_order       = get_option( 'alg_wc_reports_orders_orderby_order', 'DESC' );
@@ -129,7 +143,12 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 
 			// Skip orders
 			if (
-				! apply_filters( 'alg_wc_reports_orders_get_data_sales_by_meta_order', true, $order, $this ) ||
+				! apply_filters(
+					'alg_wc_reports_orders_get_data_sales_by_meta_order',
+					true,
+					$order,
+					$this
+				) ||
 				( $do_skip_zero_orders && 0 == $order->get_total( 'edit' ) )
 			) {
 				continue;
@@ -137,12 +156,17 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 
 			// Detailed data row (start)
 			$detailed_data_row = array();
-			$detailed_data_row[] = '<a href="' . admin_url( 'post.php?post=' . $order->get_id() . '&action=edit' ) . '">' . $order->get_order_number() . '</a>';
+			$detailed_data_row[] = '<a href="' . admin_url( 'post.php?post=' . $order->get_id() . '&action=edit' ) . '">' .
+				$order->get_order_number() .
+			'</a>';
 			$detailed_data_row[] = $order->get_date_created()->date( 'Y-m-d' );
 			$detailed_data_row[] = str_replace( ',', ' ', $order->get_billing_first_name() );
 			$detailed_data_row[] = str_replace( ',', ' ', $order->get_billing_last_name() );
 			$detailed_data_row[] = str_replace( ',', ' ', $order->get_billing_company() );
-			$detailed_data_row[] = str_replace( ',', ' ', implode( ' ', array( $order->get_billing_address_1(), $order->get_billing_address_2() ) ) );
+			$detailed_data_row[] = str_replace( ',', ' ', implode( ' ', array(
+				$order->get_billing_address_1(),
+				$order->get_billing_address_2(),
+			) ) );
 			$detailed_data_row[] = str_replace( ',', ' ', $order->get_billing_city() );
 			$detailed_data_row[] = str_replace( ',', ' ', $order->get_billing_state() );
 			$detailed_data_row[] = str_replace( ',', ' ', $order->get_billing_postcode() );
@@ -155,8 +179,18 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 				foreach ( $order->get_items() as $item_id => $item ) {
 					if ( '_product' === $meta_key ) {
 						$value = sprintf( '%s (#%d)', $item['name'], $item['product_id'] );
-						$res   = apply_filters( 'alg_wc_reports_orders_item_value', $item[ $item_data_type ],
-							array( 'item_data_type' => $item_data_type, 'item_id' => $item_id, 'item' => $item, 'order_id' => $order_id, 'order' => $order, 'orders_report' => $this ) );
+						$res   = apply_filters(
+							'alg_wc_reports_orders_item_value',
+							$item[ $item_data_type ],
+							array(
+								'item_data_type' => $item_data_type,
+								'item_id'        => $item_id,
+								'item'           => $item,
+								'order_id'       => $order_id,
+								'order'          => $order,
+								'orders_report'  => $this,
+							)
+						);
 						if ( ! isset( $data[ $value ] ) ) {
 							$data[ $value ] = 0;
 						}
@@ -170,12 +204,25 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 						$terms = get_the_terms( $item['product_id'], 'product_cat' );
 						if ( $terms && ! is_wp_error( $terms ) ) {
 							foreach ( $terms as $term ) {
-								if ( ! empty( $product_cats ) && ! in_array( $term->term_id, $product_cats ) ) {
+								if (
+									! empty( $product_cats ) &&
+									! in_array( $term->term_id, $product_cats )
+								) {
 									continue;
 								}
 								$value = sprintf( '%s (#%d)', $term->name, $term->term_id );
-								$res   = apply_filters( 'alg_wc_reports_orders_item_value', $item[ $item_data_type ],
-									array( 'item_data_type' => $item_data_type, 'item_id' => $item_id, 'item' => $item, 'order_id' => $order_id, 'order' => $order, 'orders_report' => $this ) );
+								$res   = apply_filters(
+									'alg_wc_reports_orders_item_value',
+									$item[ $item_data_type ],
+									array(
+										'item_data_type' => $item_data_type,
+										'item_id'        => $item_id,
+										'item'           => $item,
+										'order_id'       => $order_id,
+										'order'          => $order,
+										'orders_report'  => $this,
+									)
+								);
 								if ( ! isset( $data[ $value ] ) ) {
 									$data[ $value ] = 0;
 								}
@@ -197,7 +244,16 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 			} else {
 
 				// Order meta reports
-				$value = $order->get_meta( $meta_key );
+				$_meta_key = (
+					'_order_currency' === $meta_key ?
+					'_currency' :
+					$meta_key
+				);
+				$value = (
+					is_callable( array( $order, 'get' . $_meta_key ) ) ?
+					call_user_func( array( $order, 'get' . $_meta_key ) ) :
+					$order->get_meta( $_meta_key )
+				);
 				if ( ! isset( $data[ $value ] ) ) {
 					$data[ $value ] = 0;
 				}
@@ -208,26 +264,43 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 			}
 
 			// Detailed data (add row)
-			$detailed_data[] = apply_filters( 'alg_wc_reports_orders_detailed_data_row', $detailed_data_row,
-				array( 'order_id' => $order_id, 'order' => $order, 'orders_report' => $this ) );
+			$detailed_data[] = apply_filters(
+				'alg_wc_reports_orders_detailed_data_row',
+				$detailed_data_row,
+				array(
+					'order_id'      => $order_id,
+					'order'         => $order,
+					'orders_report' => $this,
+				)
+			);
 
 		}
 
 		// Detailed data
-		$detailed_data_keys = apply_filters( 'alg_wc_reports_orders_detailed_data_keys', array_unique( $detailed_data_keys ), array( 'orders_report' => $this ) );
-		$heading            = apply_filters( 'alg_wc_reports_orders_detailed_data_heading', array_merge( array(
-				__( 'Order', 'reports-for-woocommerce' ),
-				__( 'Date', 'reports-for-woocommerce' ),
-				__( 'First name', 'reports-for-woocommerce' ),
-				__( 'Last name', 'reports-for-woocommerce' ),
-				__( 'Company', 'reports-for-woocommerce' ),
-				__( 'Address', 'reports-for-woocommerce' ),
-				__( 'City', 'reports-for-woocommerce' ),
-				__( 'State', 'reports-for-woocommerce' ),
-				__( 'ZIP code', 'reports-for-woocommerce' ),
-				__( 'Country', 'reports-for-woocommerce' ),
-			), $detailed_data_keys ),
-			array( 'orders_report' => $this ) );
+		$detailed_data_keys = apply_filters(
+			'alg_wc_reports_orders_detailed_data_keys',
+			array_unique( $detailed_data_keys ),
+			array( 'orders_report' => $this )
+		);
+		$heading            = apply_filters(
+			'alg_wc_reports_orders_detailed_data_heading',
+			array_merge(
+				array(
+					__( 'Order', 'reports-for-woocommerce' ),
+					__( 'Date', 'reports-for-woocommerce' ),
+					__( 'First name', 'reports-for-woocommerce' ),
+					__( 'Last name', 'reports-for-woocommerce' ),
+					__( 'Company', 'reports-for-woocommerce' ),
+					__( 'Address', 'reports-for-woocommerce' ),
+					__( 'City', 'reports-for-woocommerce' ),
+					__( 'State', 'reports-for-woocommerce' ),
+					__( 'ZIP code', 'reports-for-woocommerce' ),
+					__( 'Country', 'reports-for-woocommerce' ),
+				),
+				$detailed_data_keys
+			),
+			array( 'orders_report' => $this )
+		);
 		$_detailed_data     = array();
 		$_detailed_data[]   = $heading;
 		foreach ( $detailed_data as $row ) {
@@ -235,7 +308,7 @@ class Alg_WC_Report_Orders extends Alg_WC_Report {
 				$raw_data = $row['raw_data'];
 				unset( $row['raw_data'] );
 				foreach ( $detailed_data_keys as $key ) {
-					$row[] = ( isset( $raw_data[ $key ] ) ? $raw_data[ $key ] : '' );
+					$row[] = ( $raw_data[ $key ] ?? '' );
 				}
 			}
 			$_detailed_data[] = $row;

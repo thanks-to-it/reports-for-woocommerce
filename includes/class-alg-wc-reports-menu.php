@@ -60,7 +60,14 @@ class Alg_WC_Reports_Menu {
 		}
 
 		// Filter
-		$menu_html = apply_filters( 'alg_wc_reports_menu_get_html', $menu_html, $data, $name, $report_id, $this );
+		$menu_html = apply_filters(
+			'alg_wc_reports_menu_get_html',
+			$menu_html,
+			$data,
+			$name,
+			$report_id,
+			$this
+		);
 
 		// Result
 		if ( ! empty( $menu_html ) ) {
@@ -81,7 +88,10 @@ class Alg_WC_Reports_Menu {
 	 * @todo    (dev) `'<p>' . $label . ': ' . implode( ' | ', $links ) ) . '</p>';`
 	 */
 	function get_menu( $label, $links, $append = '' ) {
-		return '<tr><th style="width:30%;">' . $label . '</th><td>' . implode( ' | ', $links ) . $append . '</td></tr>';
+		return '<tr>' .
+			'<th style="width:30%;">' . $label . '</th>' .
+			'<td>' . implode( ' | ', $links ) . $append . '</td>' .
+		'</tr>';
 	}
 
 	/**
@@ -92,14 +102,22 @@ class Alg_WC_Reports_Menu {
 	 */
 	function get_hidden_inputs( $skip_keys = array() ) {
 		$res = '';
-		foreach ( $_GET as $id => $value ) {
+		foreach ( $_GET as $id => $value ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( ! in_array( esc_attr( $id ), $skip_keys ) ) {
 				if ( is_array( $value ) ) {
 					foreach ( $value as $_value ) {
-						$res .= '<input type="hidden" name="' . esc_attr( wc_clean( $id ) ) . '[]" value="' . esc_attr( wc_clean( $_value ) ) . '">';
+						$res .= '<input' .
+							' type="hidden"' .
+							' name="' . esc_attr( wc_clean( $id ) ) . '[]"' .
+							' value="' . esc_attr( wc_clean( $_value ) ) . '"' .
+						'>';
 					}
 				} else {
-					$res .= '<input type="hidden" name="' . esc_attr( wc_clean( $id ) ) . '" value="' . esc_attr( wc_clean( $value ) ) . '">';
+					$res .= '<input' .
+						' type="hidden"' .
+						' name="' . esc_attr( wc_clean( $id ) ) . '"' .
+						' value="' . esc_attr( wc_clean( $value ) ) . '"' .
+					'>';
 				}
 			}
 		}
@@ -115,16 +133,38 @@ class Alg_WC_Reports_Menu {
 	function get_data_menus( $report ) {
 		$html = '';
 		$html .= $this->get_chart_type_menu( $report );
-		if ( in_array( $report, array( 'alg_wc_report_sales_by_billing_country', 'alg_wc_report_sales_by_shipping_country' ) ) ) {
+		if (
+			in_array(
+				$report,
+				array(
+					'alg_wc_report_sales_by_billing_country',
+					'alg_wc_report_sales_by_shipping_country',
+				)
+			)
+		) {
 			$html .= $this->get_data_type_menu();
 		}
 		if (
-			! in_array( $report, array( 'alg_wc_report_products_by_category', 'alg_wc_report_products_by_tag' ) ) &&
+			! in_array(
+				$report,
+				array(
+					'alg_wc_report_products_by_category',
+					'alg_wc_report_products_by_tag',
+				)
+			) &&
 			false !== strpos( $report, 'alg_wc_report_products_by_' )
 		) {
 			$html .= $this->get_data_scale_menu();
 		}
-		if ( in_array( $report, array( 'alg_wc_report_sales_by_product', 'alg_wc_report_sales_by_product_cat' ) ) ) {
+		if (
+			in_array(
+				$report,
+				array(
+					'alg_wc_report_sales_by_product',
+					'alg_wc_report_sales_by_product_cat',
+				)
+			)
+		) {
 			$html .= $this->get_item_data_type_menu();
 		}
 		return $html;
@@ -144,15 +184,15 @@ class Alg_WC_Reports_Menu {
 		) );
 		$data  = array(
 			array(
-				'key'        => '',
-				'title'      => __( 'All', 'reports-for-woocommerce' ),
+				'key'   => '',
+				'title' => __( 'All', 'reports-for-woocommerce' ),
 			),
 		);
 		if ( $terms && ! is_wp_error( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$data[] = array(
-					'key'        => strval( $term->term_id ),
-					'title'      => $term->name,
+					'key'   => strval( $term->term_id ),
+					'title' => $term->name,
 				);
 			}
 		}
@@ -161,7 +201,9 @@ class Alg_WC_Reports_Menu {
 		foreach ( $data as $value ) {
 			$url     = add_query_arg( array( $key => $value['key'] ) );
 			$active  = ( $current === $value['key'] ? 'font-weight:bold;color:black;' : '' );
-			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' . $value['title'] . '</a>';
+			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' .
+				$value['title'] .
+			'</a>';
 		}
 		return $this->get_menu( __( 'Product categories', 'reports-for-woocommerce' ), $links );
 	}
@@ -207,17 +249,41 @@ class Alg_WC_Reports_Menu {
 		$options = '';
 		$current = $this->get_current_value( $key, array() );
 		foreach ( $data as $value ) {
-			$options .= '<option value="' . $value['key'] . '" ' . selected( in_array( $value['key'], $current ), true, false ) . '>' . $value['title'] . '</option>';
+			$options .= (
+				'<option' .
+					' value="' . $value['key'] . '"' .
+					' ' . selected( in_array( $value['key'], $current ), true, false ) .
+				'>' .
+					$value['title'] .
+				'</option>'
+			);
 		}
 
 		// Final `<form>`
-		return '<tr><th style="width:30%;">' . __( 'Product categories', 'reports-for-woocommerce' ) . '</th><td>' .
+		return '<tr>' .
+			'<th style="width:30%;">' .
+				__( 'Product categories', 'reports-for-woocommerce' ) .
+			'</th>' .
+			'<td>' .
 				'<form method="get" id="' . $key . '">' .
-					'<select multiple class="chosen_select" name="' . $key . '[]">' . $options . '</select>' .
-					'<input type="submit" name="' . $key . '_submit" value="' . esc_attr__( 'Apply', 'reports-for-woocommerce' ) . '" class="button" style="margin:4px;">' .
+					'<select' .
+						' multiple' .
+						' class="chosen_select"' .
+						' name="' . $key . '[]"' .
+					'>' .
+						$options .
+					'</select>' .
+					'<input' .
+						' type="submit"' .
+						' name="' . $key . '_submit"' .
+						' value="' . esc_attr__( 'Apply', 'reports-for-woocommerce' ) . '"' .
+						' class="button"' .
+						' style="margin:4px;"' .
+					'>' .
 					$this->get_hidden_inputs( array( $key, $key . '_submit' ) ) .
 				'</form>' .
-			'</td></tr>';
+			'</td>' .
+		'</tr>';
 
 	}
 
@@ -256,7 +322,9 @@ class Alg_WC_Reports_Menu {
 		foreach ( $data as $value ) {
 			$url     = add_query_arg( array( $key => $value['key'] ) );
 			$active  = ( $current === $value['key'] ? 'font-weight:bold;color:black;' : '' );
-			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' . $value['title'] . '</a>';
+			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' .
+				$value['title'] .
+			'</a>';
 		}
 		return $this->get_menu( __( 'Item data', 'reports-for-woocommerce' ), $links );
 	}
@@ -292,7 +360,9 @@ class Alg_WC_Reports_Menu {
 		foreach ( $data as $k => $value ) {
 			$url     = add_query_arg( array( $key => $k ) );
 			$active  = ( $current === $k ? 'font-weight:bold;color:black;' : '' );
-			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' . $value . '</a>';
+			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' .
+				$value .
+			'</a>';
 		}
 		return $this->get_menu( __( 'Product Type', 'reports-for-woocommerce' ), $links );
 	}
@@ -320,14 +390,19 @@ class Alg_WC_Reports_Menu {
 			return '';
 		}
 		$key     = 'order_status';
-		$data    = array_merge( array( 'wc-any' => __( 'All', 'reports-for-woocommerce' ) ), wc_get_order_statuses() );
+		$data    = array_merge(
+			array( 'wc-any' => __( 'All', 'reports-for-woocommerce' ) ),
+			wc_get_order_statuses()
+		);
 		$links   = array();
 		$current = $this->get_current_value( $key, 'any' );
 		foreach ( $data as $k => $value ) {
 			$k       = substr( $k, 3 );
 			$url     = add_query_arg( array( $key => $k ) );
 			$active  = ( $current === $k ? 'font-weight:bold;color:black;' : '' );
-			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' . $value . '</a>';
+			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' .
+				$value .
+			'</a>';
 		}
 		return $this->get_menu( __( 'Order status', 'reports-for-woocommerce' ), $links );
 	}
@@ -383,7 +458,9 @@ class Alg_WC_Reports_Menu {
 		foreach ( $data as $value ) {
 			$url     = add_query_arg( array( $key => $value['key'] ) );
 			$active  = ( $current == $value['key'] ? 'font-weight:bold;color:black;' : '' );
-			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' . $value['title'] . '</a>';
+			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' .
+				$value['title'] .
+			'</a>';
 		}
 		return $this->get_menu( __( 'Scale', 'reports-for-woocommerce' ), $links );
 	}
@@ -421,7 +498,9 @@ class Alg_WC_Reports_Menu {
 		foreach ( $data as $value ) {
 			$url     = add_query_arg( array( $key => $value['key'] ) );
 			$active  = ( $current === $value['key'] ? 'font-weight:bold;color:black;' : '' );
-			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' . $value['title'] . '</a>';
+			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' .
+				$value['title'] .
+			'</a>';
 		}
 		return $this->get_menu( __( 'Data', 'reports-for-woocommerce' ), $links );
 	}
@@ -479,7 +558,9 @@ class Alg_WC_Reports_Menu {
 		foreach ( $data as $value ) {
 			$url     = add_query_arg( array( $key => $value['key'] ) );
 			$active  = ( $current === $value['key'] ? 'font-weight:bold;color:black;' : '' );
-			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' . $value['title'] . '</a>';
+			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' .
+				$value['title'] .
+			'</a>';
 		}
 		return $this->get_menu( __( 'Chart type', 'reports-for-woocommerce' ), $links );
 	}
@@ -497,7 +578,7 @@ class Alg_WC_Reports_Menu {
 	/**
 	 * get_date_menu.
 	 *
-	 * @version 1.6.0
+	 * @version 2.0.0
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) maybe even more ranges (e.g., "last 36 months" etc.)
@@ -505,6 +586,7 @@ class Alg_WC_Reports_Menu {
 	function get_date_menu() {
 
 		// Fixed dates
+		// phpcs:disable WordPress.DateTime.RestrictedFunctions.date_date
 		$time   = (int) current_time( 'timestamp' );
 		$ranges = array(
 			array(
@@ -562,22 +644,41 @@ class Alg_WC_Reports_Menu {
 				'title'      => __( 'Today', 'reports-for-woocommerce' ),
 			),
 		);
+		// phpcs:enable WordPress.DateTime.RestrictedFunctions.date_date
 		$links   = array();
 		$current = $this->get_current_value( 'range', '7day' );
 		foreach ( $ranges as $range ) {
 			$url     = add_query_arg( array( 'range' => $range['key'], 'start_date' => $range['start_date'], 'end_date' => $range['end_date'] ) );
 			$active  = ( $current === $range['key'] ? 'font-weight:bold;color:black;' : '' );
-			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' . $range['title'] . '</a>';
+			$links[] = '<a href="' . $url . '" style="text-decoration:none;' . $active . '">' .
+				$range['title'] .
+			'</a>';
 		}
 
 		// Custom date range
-		$custom_range = '<p><form method="get">' .
-			'<input type="date" name="start_date" value="' . $this->get_current_value( 'start_date', '' ) . '">' .
-			'<input type="date" name="end_date" value="' . $this->get_current_value( 'end_date', '' ) . '">' .
-			'<input type="hidden" name="range" value="custom">' .
+		$custom_range = '<form method="get" style="margin-top:10px;margin-bottom:10px;">' .
+			'<input' .
+				' type="date"' .
+				' name="start_date"' .
+				' value="' . $this->get_current_value( 'start_date', '' ) . '"' .
+			'>' .
+			'<input' .
+				' type="date"' .
+				' name="end_date"' .
+				' value="' . $this->get_current_value( 'end_date', '' ) . '"' .
+			'>' .
+			'<input' .
+				' type="hidden"' .
+				' name="range"' .
+				' value="custom"' .
+			'>' .
 			$this->get_hidden_inputs( array( 'start_date', 'end_date' ) ) .
-			'<input type="submit" class="button" value="' . esc_attr__( 'Apply', 'reports-for-woocommerce' ) . '">' .
-		'</form></p>';
+			'<input' .
+				' type="submit"' .
+				' class="button"' .
+				' value="' . esc_attr__( 'Apply', 'reports-for-woocommerce' ) . '"' .
+			'>' .
+		'</form>';
 
 		// Result
 		return $this->get_menu( __( 'Period', 'reports-for-woocommerce' ), $links, $custom_range );
@@ -591,15 +692,15 @@ class Alg_WC_Reports_Menu {
 	 * @since   1.0.0
 	 */
 	function get_report_date() {
-		if ( isset( $_GET['start_date'], $_GET['end_date'] ) ) {
+		if ( isset( $_GET['start_date'], $_GET['end_date'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return sprintf( '%s...%s',
-				wc_clean( wp_unslash( $_GET['start_date'] ) ) . ' ' . '00:00:00',   // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				wc_clean( wp_unslash( $_GET['end_date'] ) )   . ' ' . '23:59:59' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				wc_clean( wp_unslash( $_GET['start_date'] ) ) . ' ' . '00:00:00',   // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
+				wc_clean( wp_unslash( $_GET['end_date'] ) )   . ' ' . '23:59:59' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
 		} else {
 			$time = (int) current_time( 'timestamp' );
 			return sprintf( '%s...%s',
-				date( 'Y-m-d 00:00:00', strtotime( '-6 days', $time ) ),
-				date( 'Y-m-d 23:59:59', $time ) );
+				date( 'Y-m-d 00:00:00', strtotime( '-6 days', $time ) ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+				date( 'Y-m-d 23:59:59', $time ) );                       // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		}
 	}
 
@@ -610,12 +711,11 @@ class Alg_WC_Reports_Menu {
 	 * @since   1.2.0
 	 */
 	function get_current_value( $key, $default ) {
-		if ( isset( $_GET[ $key ] ) ) {
-			return wc_clean( wp_unslash( $_GET[ $key ] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		} else {
-			$menu_selections = get_user_meta( get_current_user_id(), '_alg_wc_reports_menu_selections', true );
-			return ( ! empty( $menu_selections ) && isset( $menu_selections[ $key ] ) ? $menu_selections[ $key ] : $default );
-		}
+		return (
+			isset( $_GET[ $key ] ) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wc_clean( wp_unslash( $_GET[ $key ] ) ) : // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
+			$default
+		);
 	}
 
 }

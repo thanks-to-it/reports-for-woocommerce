@@ -147,10 +147,16 @@ final class Alg_WC_Reports {
 	function admin() {
 
 		// Action links
-		add_filter( 'plugin_action_links_' . plugin_basename( ALG_WC_REPORTS_FILE ), array( $this, 'action_links' ) );
+		add_filter(
+			'plugin_action_links_' . plugin_basename( ALG_WC_REPORTS_FILE ),
+			array( $this, 'action_links' )
+		);
 
 		// Settings
-		add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_woocommerce_settings_tab' ) );
+		add_filter(
+			'woocommerce_get_settings_pages',
+			array( $this, 'add_woocommerce_settings_tab' )
+		);
 
 		// Version update
 		if ( get_option( 'alg_wc_reports_version', '' ) !== $this->version ) {

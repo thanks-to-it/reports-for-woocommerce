@@ -92,10 +92,19 @@ class Alg_WC_Report_Taxes extends Alg_WC_Report {
 
 				// Init
 				$tax_total = $tax->get_tax_total();
-				$label     = sprintf( '%s (%s%%) [#%d]', $tax->get_label(), $tax->get_rate_percent(), $tax->get_rate_id() );
+				$label     = sprintf(
+					'%s (%s%%) [#%d]',
+					$tax->get_label(),
+					$tax->get_rate_percent(),
+					$tax->get_rate_id()
+				);
 
 				// Data
-				$data[ $label ] = ( isset( $data[ $label ] ) ? ( $data[ $label ] + $tax_total ) : $tax_total );
+				$data[ $label ] = (
+					isset( $data[ $label ] ) ?
+					( $data[ $label ] + $tax_total ) :
+					$tax_total
+				);
 
 				// Detailed data
 				$taxes[ $label ] = array( 'label' => $label, 'tax_total' => $tax_total );
@@ -155,7 +164,11 @@ class Alg_WC_Report_Taxes extends Alg_WC_Report {
 			foreach ( $row as $id => $value ) {
 				if ( 'taxes' === $id ) {
 					foreach ( array_keys( $data ) as $label ) {
-						$_row[] = ( isset( $value[ $label ] ) ? $value[ $label ]['tax_total'] : '' );
+						$_row[] = (
+							isset( $value[ $label ] ) ?
+							$value[ $label ]['tax_total'] :
+							''
+						);
 					}
 				} else {
 					$_row[] = $value;

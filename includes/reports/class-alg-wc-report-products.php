@@ -2,7 +2,7 @@
 /**
  * Reports for WooCommerce - Report - Products
  *
- * @version 1.2.0
+ * @version 2.0.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd.
@@ -52,23 +52,29 @@ class Alg_WC_Report_Products extends Alg_WC_Report {
 	/**
 	 * get_data.
 	 *
-	 * @version 1.2.0
+	 * @version 2.0.0
 	 * @since   1.0.0
 	 */
 	function get_data( $name ) {
 		switch ( $name ) {
+
 			case 'alg_wc_report_products_by_price':
 				$data = $this->get_data_products_by_price();
 				break;
+
 			case 'alg_wc_report_products_by_category':
 				$data = $this->get_data_products_by_term( 'product_cat' );
 				break;
+
 			case 'alg_wc_report_products_by_tag':
 				$data = $this->get_data_products_by_term( 'product_tag' );
 				break;
+
 			default:
-				$data = $this->get_data_products_by_meta( str_replace( array( 'alg_wc_report_products_by' ), '', $name ) );
-				break;
+				$data = $this->get_data_products_by_meta(
+					str_replace( 'alg_wc_report_products_by', '', $name )
+				);
+
 		}
 		return array( 'data' => $data, 'detailed_data' => array() );
 	}
@@ -82,9 +88,13 @@ class Alg_WC_Report_Products extends Alg_WC_Report {
 	function get_products() {
 		$type = $this->get_menu()->get_product_type();
 		return wc_get_products( array(
-			'type'         => ( 'any' === $type ? array_merge( array( 'variation' ), array_keys( wc_get_product_types() ) ) : $type ),
-			'limit'        => -1,
-			'return'       => 'ids',
+			'type'   => (
+				'any' === $type ?
+				array_merge( array( 'variation' ), array_keys( wc_get_product_types() ) ) :
+				$type
+			),
+			'limit'  => -1,
+			'return' => 'ids',
 		) );
 	}
 
@@ -95,7 +105,7 @@ class Alg_WC_Report_Products extends Alg_WC_Report {
 	 * @since   1.0.0
 	 */
 	function get_data_products_by_term( $taxonomy ) {
-		$data  = array();
+		$data = array();
 		foreach ( $this->get_products() as $product_id ) {
 			$terms = get_the_terms( $product_id, $taxonomy );
 			if ( ! empty( $terms ) ) {
@@ -119,6 +129,7 @@ class Alg_WC_Report_Products extends Alg_WC_Report {
 	 * @since   1.0.0
 	 */
 	function get_data_products_by_price() {
+
 		$scale = $this->get_menu()->get_data_scale();
 		$data  = array();
 		foreach ( $this->get_products() as $product_id ) {
@@ -133,6 +144,7 @@ class Alg_WC_Report_Products extends Alg_WC_Report {
 			$data[ $value ]++;
 		}
 		ksort( $data );
+
 		$modified_data = array();
 		foreach ( $data as $key => $value ) {
 			if ( 0 === $key ) {
@@ -140,11 +152,17 @@ class Alg_WC_Report_Products extends Alg_WC_Report {
 			} elseif ( '' === $key ) {
 				$new_key = __( 'empty', 'reports-for-woocommerce' );
 			} else {
-				$new_key = sprintf( '%s-%s %s', ( ( $key - 1 ) * $scale ), ( $key * $scale ), get_woocommerce_currency() );
+				$new_key = sprintf(
+					'%s-%s %s',
+					( ( $key - 1 ) * $scale ),
+					( $key * $scale ),
+					get_woocommerce_currency()
+				);
 			}
 			$modified_data[ $new_key ] = $value;
 		}
 		$data = $modified_data;
+
 		return $data;
 	}
 
@@ -155,6 +173,7 @@ class Alg_WC_Report_Products extends Alg_WC_Report {
 	 * @since   1.0.0
 	 */
 	function get_data_products_by_meta( $meta_key ) {
+
 		$scale = $this->get_menu()->get_data_scale();
 		$data  = array();
 		foreach ( $this->get_products() as $product_id ) {
@@ -168,6 +187,7 @@ class Alg_WC_Report_Products extends Alg_WC_Report {
 			$data[ $value ]++;
 		}
 		ksort( $data );
+
 		$modified_data = array();
 		foreach ( $data as $key => $value ) {
 			if ( 0 === $key ) {
@@ -175,11 +195,16 @@ class Alg_WC_Report_Products extends Alg_WC_Report {
 			} elseif ( '' === $key ) {
 				$new_key = __( 'empty', 'reports-for-woocommerce' );
 			} else {
-				$new_key = sprintf( '%s - %s', ( ( $key - 1 ) * $scale ), ( $key * $scale ) );
+				$new_key = sprintf(
+					'%s - %s',
+					( ( $key - 1 ) * $scale ),
+					( $key * $scale )
+				);
 			}
 			$modified_data[ $new_key ] = $value;
 		}
 		$data = $modified_data;
+
 		return $data;
 	}
 

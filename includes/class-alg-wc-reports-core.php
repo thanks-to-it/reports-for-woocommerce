@@ -65,12 +65,13 @@ class Alg_WC_Reports_Core {
 	 * @todo    (dev) add option to output only data table (i.e., no chart)
 	 */
 	function __construct() {
-		if ( is_admin() ) {
-			add_action( 'admin_init',                array( $this, 'init' ), 1 );
-			add_filter( 'woocommerce_admin_reports', array( $this, 'add_reports' ), 1 );
-			add_action( 'admin_init',                array( $this, 'export_reports' ), 1 );
-			add_action( 'admin_enqueue_scripts',     array( $this, 'add_scripts' ) );
+		if ( ! is_admin() ) {
+			return;
 		}
+		add_action( 'init', array( $this, 'init' ), 1 );
+		add_filter( 'woocommerce_admin_reports', array( $this, 'add_reports' ), 1 );
+		add_action( 'admin_init', array( $this, 'export_reports' ), 1 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
 	}
 
 	/**
@@ -100,25 +101,49 @@ class Alg_WC_Reports_Core {
 	/**
 	 * add_scripts.
 	 *
-	 * @version 1.0.0
+	 * @version 2.0.0
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) load only needed by `$this->menu->get_chart_type()`
 	 * @todo    (dev) `jquery` in deps
-	 * @todo    (dev) `$in_footer = true`
 	 */
 	function add_scripts() {
-		if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
-			$v   = alg_wc_reports()->version;
-			$url = alg_wc_reports()->plugin_url() . '/includes/lib/';
+		if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$version = alg_wc_reports()->version;
+			$url     = alg_wc_reports()->plugin_url() . '/includes/lib/';
 
 			// Chart
-			wp_enqueue_script( 'alg-wc-reports-chart',          $url . 'chartjs/Chart.min.js',           array(), $v, false );
+			wp_enqueue_script(
+				'alg-wc-reports-chart',
+				$url . 'chartjs/Chart.min.js',
+				array(),
+				$version,
+				true
+			);
 
 			// Datamaps
-			wp_enqueue_script( 'alg-wc-reports-d3',             $url . 'datamaps/d3.min.js',             array(), $v, false );
-			wp_enqueue_script( 'alg-wc-reports-topojson',       $url . 'datamaps/topojson.min.js',       array(), $v, false );
-			wp_enqueue_script( 'alg-wc-reports-datamaps-all',   $url . 'datamaps/datamaps.all.min.js',   array(), $v, false );
+			wp_enqueue_script(
+				'alg-wc-reports-d3',
+				$url . 'datamaps/d3.min.js',
+				array(),
+				$version,
+				true
+			);
+			wp_enqueue_script(
+				'alg-wc-reports-topojson',
+				$url . 'datamaps/topojson.min.js',
+				array(),
+				$version,
+				true
+			);
+			wp_enqueue_script(
+				'alg-wc-reports-datamaps-all',
+				$url . 'datamaps/datamaps.all.min.js',
+				array(),
+				$version,
+				true
+			);
+
 		}
 	}
 
@@ -130,12 +155,26 @@ class Alg_WC_Reports_Core {
 	 * @version 2.0.0
 	 * @since   1.2.0
 	 *
-	 * @todo    (dev) nonce
 	 * @todo    (dev) validate `$name`
 	 * @todo    (dev) validate `$data_type`
 	 */
 	function export_reports() {
-		if ( isset( $_GET['alg_wc_reports_export_type'], $_GET['alg_wc_reports_export_name'], $_GET['alg_wc_reports_export_data_type'] ) ) {
+		if (
+			isset(
+				$_GET['alg_wc_reports_export_type'],
+				$_GET['alg_wc_reports_export_name'],
+				$_GET['alg_wc_reports_export_data_type'],
+				$_GET['_alg_wc_reports_export_nonce']
+			)
+		) {
+			if (
+				! wp_verify_nonce(
+					sanitize_text_field( wp_unslash( $_GET['_alg_wc_reports_export_nonce'] ) ),
+					'alg_wc_reports_export',
+				)
+			) {
+				wp_die( esc_html__( 'Link expired.', 'reports-for-woocommerce' ) );
+			}
 			if ( current_user_can( 'manage_woocommerce' ) ) {
 				$type      = wc_clean( wp_unslash( $_GET['alg_wc_reports_export_type'] ) );      // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$name      = wc_clean( wp_unslash( $_GET['alg_wc_reports_export_name'] ) );      // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

@@ -45,21 +45,21 @@ class Alg_WC_Settings_Reports extends WC_Settings_Page {
 			apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ),
 			array(
 				array(
-					'title'     => __( 'Reset Settings', 'reports-for-woocommerce' ),
-					'type'      => 'title',
-					'id'        => $this->id . '_' . $current_section . '_reset_options',
+					'title'    => __( 'Reset Settings', 'reports-for-woocommerce' ),
+					'type'     => 'title',
+					'id'       => $this->id . '_' . $current_section . '_reset_options',
 				),
 				array(
-					'title'     => __( 'Reset section settings', 'reports-for-woocommerce' ),
-					'desc'      => '<strong>' . __( 'Reset', 'reports-for-woocommerce' ) . '</strong>',
-					'desc_tip'  => __( 'Check the box and save changes to reset.', 'reports-for-woocommerce' ),
-					'id'        => $this->id . '_' . $current_section . '_reset',
-					'default'   => 'no',
-					'type'      => 'checkbox',
+					'title'    => __( 'Reset section settings', 'reports-for-woocommerce' ),
+					'desc'     => '<strong>' . __( 'Reset', 'reports-for-woocommerce' ) . '</strong>',
+					'desc_tip' => __( 'Check the box and save changes to reset.', 'reports-for-woocommerce' ),
+					'id'       => $this->id . '_' . $current_section . '_reset',
+					'default'  => 'no',
+					'type'     => 'checkbox',
 				),
 				array(
-					'type'      => 'sectionend',
-					'id'        => $this->id . '_' . $current_section . '_reset_options',
+					'type'     => 'sectionend',
+					'id'       => $this->id . '_' . $current_section . '_reset_options',
 				),
 			)
 		);
@@ -68,7 +68,7 @@ class Alg_WC_Settings_Reports extends WC_Settings_Page {
 	/**
 	 * maybe_reset_settings.
 	 *
-	 * @version 1.1.0
+	 * @version 2.0.0
 	 * @since   1.0.0
 	 */
 	function maybe_reset_settings() {
@@ -80,7 +80,24 @@ class Alg_WC_Settings_Reports extends WC_Settings_Page {
 					delete_option( $id[0] );
 				}
 			}
+			add_action(
+				'admin_notices',
+				array( $this, 'admin_notices_settings_reset_success' ),
+				PHP_INT_MAX
+			);
 		}
+	}
+
+	/**
+	 * admin_notices_settings_reset_success.
+	 *
+	 * @version 2.0.0
+	 * @since   2.0.0
+	 */
+	function admin_notices_settings_reset_success() {
+		echo '<div class="notice notice-warning is-dismissible"><p><strong>' .
+			esc_html__( 'Your settings have been reset.', 'reports-for-woocommerce' ) .
+		'</strong></p></div>';
 	}
 
 	/**

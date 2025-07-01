@@ -3,7 +3,7 @@ Contributors: algoritmika, thankstoit, anbinder, karzin
 Tags: woocommerce, report, reports, ecommerce
 Requires at least: 4.4
 Tested up to: 6.8
-Stable tag: 1.7.2
+Stable tag: 2.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -64,10 +64,14 @@ Reports for WooCommerce plugin is not just a tool; it's a lens through which you
 
 == Changelog ==
 
-= 2.0.0 - 26/06/2025 =
+= 2.0.0 - 01/07/2025 =
 * Fix - Translation loading fixed.
+* Fix - "Save user menu selections" removed.
+* Fix - Reports - Orders - "Function is_internal_meta_key was called incorrectly" notice fixed.
+* Fix - Reports - Taxes - "Item data" fixed (now always "Sum").
 * Dev - Security - Output escaped.
 * Dev - Security - Input sanitized.
+* Dev - Security - Nonces added.
 * Dev - Code refactoring.
 * Dev - Coding standards improved.
 * WC tested up to: 9.9.

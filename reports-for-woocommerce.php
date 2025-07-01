@@ -3,7 +3,7 @@
 Plugin Name: Reports for WooCommerce
 Plugin URI: https://wordpress.org/plugins/reports-for-woocommerce/
 Description: Advanced WooCommerce reports.
-Version: 2.0.0-dev
+Version: 2.0.0
 Author: Algoritmika Ltd
 Author URI: https://profiles.wordpress.org/algoritmika/
 Requires at least: 4.4
@@ -37,7 +37,7 @@ if ( 'reports-for-woocommerce.php' === basename( __FILE__ ) ) {
 	}
 }
 
-defined( 'ALG_WC_REPORTS_VERSION' ) || define( 'ALG_WC_REPORTS_VERSION', '2.0.0-dev-20250626-1900' );
+defined( 'ALG_WC_REPORTS_VERSION' ) || define( 'ALG_WC_REPORTS_VERSION', '2.0.0' );
 
 defined( 'ALG_WC_REPORTS_FILE' ) || define( 'ALG_WC_REPORTS_FILE', __FILE__ );
 
@@ -49,11 +49,6 @@ if ( ! function_exists( 'alg_wc_reports' ) ) {
 	 *
 	 * @version 1.0.0
 	 * @since   1.0.0
-	 *
-	 * @todo    (v2.0.0) Plugin Check
-	 * @todo    (v2.0.0) code formatting
-	 * @todo    (v2.0.0) `<script>`
-	 * @todo    (v2.0.0) "Number of"
 	 */
 	function alg_wc_reports() {
 		return Alg_WC_Reports::instance();

@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Reports for WooCommerce 2.0.0-dev\n"
+"Project-Id-Version: Reports for WooCommerce 2.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/reports-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-29T12:52:39+00:00\n"
+"POT-Creation-Date: 2025-07-01T21:56:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: reports-for-woocommerce\n"
@@ -40,210 +40,214 @@ msgstr ""
 msgid "https://profiles.wordpress.org/algoritmika/"
 msgstr ""
 
-#: includes/abstracts/class-alg-wc-report.php:125
+#: includes/abstracts/class-alg-wc-report.php:114
 msgid "No data."
 msgstr ""
 
-#: includes/abstracts/class-alg-wc-report.php:135
-msgid "Detailed Data"
-msgstr ""
-
-#: includes/abstracts/class-alg-wc-report.php:165
+#: includes/abstracts/class-alg-wc-report.php:203
 msgid "Report"
 msgstr ""
 
-#: includes/abstracts/class-alg-wc-report.php:177
-#: includes/class-alg-wc-reports-menu.php:251
+#: includes/abstracts/class-alg-wc-report.php:218
+#: includes/class-alg-wc-reports-menu.php:317
 msgid "Sum"
 msgstr ""
 
 #. Translators: %s: Orders/Products/Taxes.
-#: includes/abstracts/class-alg-wc-report.php:180
+#: includes/abstracts/class-alg-wc-report.php:221
 msgid "Number of %s"
 msgstr ""
 
-#: includes/abstracts/class-alg-wc-report.php:205
+#: includes/abstracts/class-alg-wc-report.php:257
 msgid "Export"
 msgstr ""
 
-#: includes/abstracts/class-alg-wc-report.php:216
-#: includes/class-alg-wc-reports-menu.php:426
+#: includes/abstracts/class-alg-wc-report.php:269
+#: includes/class-alg-wc-reports-menu.php:505
 msgid "Data"
 msgstr ""
 
+#: includes/abstracts/class-alg-wc-report.php:283
+msgid "Detailed Data"
+msgstr ""
+
 #. Translators: %s: Report settings link.
-#: includes/abstracts/class-alg-wc-report.php:248
+#: includes/abstracts/class-alg-wc-report.php:319
 msgid "Reports settings: %s"
 msgstr ""
 
-#: includes/abstracts/class-alg-wc-report.php:250
+#: includes/abstracts/class-alg-wc-report.php:321
 msgid "WooCommerce > Settings > Reports"
 msgstr ""
 
 #. Translators: %s: Report date.
-#: includes/abstracts/class-alg-wc-report.php:258
+#: includes/abstracts/class-alg-wc-report.php:329
 msgid "Report dates: %s"
 msgstr ""
 
-#: includes/class-alg-wc-reports-core.php:175
+#: includes/class-alg-wc-reports-core.php:176
+msgid "Link expired."
+msgstr ""
+
+#: includes/class-alg-wc-reports-core.php:214
 #: includes/reports/class-alg-wc-report-products.php:25
 msgid "Products"
 msgstr ""
 
-#: includes/class-alg-wc-reports-core.php:178
+#: includes/class-alg-wc-reports-core.php:217
 #: includes/reports/class-alg-wc-report-taxes.php:25
 msgid "Taxes"
 msgstr ""
 
-#: includes/class-alg-wc-reports-countries.php:52
-#: includes/class-alg-wc-reports-countries.php:83
+#: includes/class-alg-wc-reports-countries.php:104
+#: includes/class-alg-wc-reports-countries.php:322
 msgid "Africa"
 msgstr ""
 
-#: includes/class-alg-wc-reports-countries.php:53
-#: includes/class-alg-wc-reports-countries.php:75
+#: includes/class-alg-wc-reports-countries.php:105
+#: includes/class-alg-wc-reports-countries.php:183
 msgid "Asia"
 msgstr ""
 
-#: includes/class-alg-wc-reports-countries.php:54
-#: includes/class-alg-wc-reports-countries.php:78
+#: includes/class-alg-wc-reports-countries.php:106
+#: includes/class-alg-wc-reports-countries.php:239
 msgid "Australia & Oceania"
 msgstr ""
 
-#: includes/class-alg-wc-reports-countries.php:55
-#: includes/class-alg-wc-reports-countries.php:72
+#: includes/class-alg-wc-reports-countries.php:107
+#: includes/class-alg-wc-reports-countries.php:128
 msgid "Europe"
 msgstr ""
 
-#: includes/class-alg-wc-reports-countries.php:56
-#: includes/class-alg-wc-reports-countries.php:80
+#: includes/class-alg-wc-reports-countries.php:108
+#: includes/class-alg-wc-reports-countries.php:267
 msgid "Central America"
 msgstr ""
 
-#: includes/class-alg-wc-reports-countries.php:57
-#: includes/class-alg-wc-reports-countries.php:71
+#: includes/class-alg-wc-reports-countries.php:109
+#: includes/class-alg-wc-reports-countries.php:123
 msgid "North America"
 msgstr ""
 
-#: includes/class-alg-wc-reports-countries.php:58
-#: includes/class-alg-wc-reports-countries.php:82
+#: includes/class-alg-wc-reports-countries.php:110
+#: includes/class-alg-wc-reports-countries.php:305
 msgid "South America"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:67
+#: includes/class-alg-wc-reports-menu.php:74
 msgid "Menu"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:148
-#: includes/class-alg-wc-reports-menu.php:286
-#: includes/class-alg-wc-reports-menu.php:323
+#: includes/class-alg-wc-reports-menu.php:188
+#: includes/class-alg-wc-reports-menu.php:354
+#: includes/class-alg-wc-reports-menu.php:394
 msgid "All"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:166
-#: includes/class-alg-wc-reports-menu.php:214
+#: includes/class-alg-wc-reports-menu.php:208
+#: includes/class-alg-wc-reports-menu.php:265
 #: includes/settings/class-alg-wc-reports-settings-general.php:168
 msgid "Product categories"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:217
-#: includes/class-alg-wc-reports-menu.php:579
+#: includes/class-alg-wc-reports-menu.php:279
+#: includes/class-alg-wc-reports-menu.php:679
 msgid "Apply"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:247
+#: includes/class-alg-wc-reports-menu.php:313
 msgid "Qty"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:261
+#: includes/class-alg-wc-reports-menu.php:329
 msgid "Item data"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:288
+#: includes/class-alg-wc-reports-menu.php:356
 msgid "Variations"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:297
+#: includes/class-alg-wc-reports-menu.php:367
 msgid "Product Type"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:332
+#: includes/class-alg-wc-reports-menu.php:407
 msgid "Order status"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:388
+#: includes/class-alg-wc-reports-menu.php:465
 msgid "Scale"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:412
+#: includes/class-alg-wc-reports-menu.php:489
 msgid "Countries"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:416
+#: includes/class-alg-wc-reports-menu.php:493
 msgid "Continents"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:453
+#: includes/class-alg-wc-reports-menu.php:532
 msgid "Bar"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:457
+#: includes/class-alg-wc-reports-menu.php:536
 msgid "Pie"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:466
+#: includes/class-alg-wc-reports-menu.php:545
 msgid "Map"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:474
+#: includes/class-alg-wc-reports-menu.php:553
 msgid "Map (USA)"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:484
+#: includes/class-alg-wc-reports-menu.php:565
 msgid "Chart type"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:514
+#: includes/class-alg-wc-reports-menu.php:596
 msgid "Last year"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:520
+#: includes/class-alg-wc-reports-menu.php:602
 msgid "Year"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:526
+#: includes/class-alg-wc-reports-menu.php:608
 msgid "Last 3 months"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:532
+#: includes/class-alg-wc-reports-menu.php:614
 msgid "Last month"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:538
+#: includes/class-alg-wc-reports-menu.php:620
 msgid "Last 30 days"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:544
+#: includes/class-alg-wc-reports-menu.php:626
 msgid "This month"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:550
+#: includes/class-alg-wc-reports-menu.php:632
 msgid "Last 7 days"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:556
+#: includes/class-alg-wc-reports-menu.php:638
 msgid "Yesterday"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:562
+#: includes/class-alg-wc-reports-menu.php:644
 msgid "Today"
 msgstr ""
 
-#: includes/class-alg-wc-reports-menu.php:583
+#: includes/class-alg-wc-reports-menu.php:684
 msgid "Period"
 msgstr ""
 
-#: includes/class-alg-wc-reports.php:175
+#: includes/class-alg-wc-reports.php:181
 msgid "Settings"
 msgstr ""
 
@@ -287,49 +291,49 @@ msgstr ""
 msgid "Sales by product category"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:205
+#: includes/reports/class-alg-wc-report-orders.php:261
 msgid "Value"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:219
+#: includes/reports/class-alg-wc-report-orders.php:289
 msgid "Order"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:220
-#: includes/reports/class-alg-wc-report-taxes.php:144
+#: includes/reports/class-alg-wc-report-orders.php:290
+#: includes/reports/class-alg-wc-report-taxes.php:153
 #: includes/settings/class-alg-wc-reports-settings-general.php:121
 msgid "Date"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:221
+#: includes/reports/class-alg-wc-report-orders.php:291
 msgid "First name"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:222
+#: includes/reports/class-alg-wc-report-orders.php:292
 msgid "Last name"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:223
+#: includes/reports/class-alg-wc-report-orders.php:293
 msgid "Company"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:224
+#: includes/reports/class-alg-wc-report-orders.php:294
 msgid "Address"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:225
+#: includes/reports/class-alg-wc-report-orders.php:295
 msgid "City"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:226
+#: includes/reports/class-alg-wc-report-orders.php:296
 msgid "State"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:227
+#: includes/reports/class-alg-wc-report-orders.php:297
 msgid "ZIP code"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-orders.php:228
+#: includes/reports/class-alg-wc-report-orders.php:298
 msgid "Country"
 msgstr ""
 
@@ -365,12 +369,12 @@ msgstr ""
 msgid "Products by tag"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-products.php:139
+#: includes/reports/class-alg-wc-report-products.php:151
 msgid "free"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-products.php:141
-#: includes/reports/class-alg-wc-report-products.php:176
+#: includes/reports/class-alg-wc-report-products.php:153
+#: includes/reports/class-alg-wc-report-products.php:196
 msgid "empty"
 msgstr ""
 
@@ -378,15 +382,15 @@ msgstr ""
 msgid "Taxes by order"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-taxes.php:143
+#: includes/reports/class-alg-wc-report-taxes.php:152
 msgid "Order Number"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-taxes.php:149
+#: includes/reports/class-alg-wc-report-taxes.php:158
 msgid "Total Tax"
 msgstr ""
 
-#: includes/reports/class-alg-wc-report-taxes.php:170
+#: includes/reports/class-alg-wc-report-taxes.php:183
 msgid "Totals per tax category"
 msgstr ""
 
@@ -540,4 +544,8 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-settings-reports.php:55
 msgid "Check the box and save changes to reset."
+msgstr ""
+
+#: includes/settings/class-alg-wc-settings-reports.php:99
+msgid "Your settings have been reset."
 msgstr ""
